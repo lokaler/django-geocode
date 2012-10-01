@@ -10,6 +10,8 @@ from django.conf import settings
 ADMIN_NAME, ADMIN_EMAIL = settings.ADMINS[0]
 DEFAULT_CITY = settings.CITY
 
+keys = getattr(settings, 'GEOCODE_KEYS', {})
+
 
 class QuotaExceeded(Exception):
     """ The quota has been exceeded for this geocoder. 
@@ -141,7 +143,7 @@ class Yahoo(Geocoder):
     key = "YAHOO"
 
     def get_params(self, values):
-        params = { 'flags': 'JG', 'appid': 'OX3u2t62'}
+        params = { 'flags': 'JG', 'appid': keys.get('yahoo')}
 
         if 'country' in values:
             params['country'] = values['country']
