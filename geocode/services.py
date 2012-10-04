@@ -179,7 +179,7 @@ class Yahoo(Geocoder):
             raise NoClearResult("Multiple results returned")
 
         result = results['Results'][0]
-        if require_exact and int(result['quality']) <= 86:
+        if require_exact and int(result['quality']) < 80:
             raise NoClearResult("Insufficiently accurate result returned")
 
         fields = ['name', 'line1', 'line2', 'line3', 'line4']
