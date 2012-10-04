@@ -149,8 +149,9 @@ class Yahoo(Geocoder):
             params['country'] = values['country']
         if 'language' in values:
             params['locale'] = values['language']
-        if 'name' in values:
-            params['name'] = values['name']
+        # No results are returned when we use this
+        #if 'name' in values:
+        #    params['name'] = values['name']
         if 'address' in values:
             params['q'] = values['address']
         else:
