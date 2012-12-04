@@ -47,7 +47,6 @@ class Geocoder(object):
         response = urlopen(self.url + "?" + self.query)
         return self.parse_response(response.read(), require_exact)
 
-
 class GoogleMaps(Geocoder):
     url = 'http://maps.googleapis.com/maps/api/geocode/json'
 
@@ -179,8 +178,8 @@ class Yahoo(Geocoder):
             raise NoClearResult("Multiple results returned")
 
         result = results['Results'][0]
-        if require_exact and int(result['quality']) < 80:
-            raise NoClearResult("Insufficiently accurate result returned")
+#        if require_exact and int(result['quality']) < 80:
+#            raise NoClearResult("Insufficiently accurate result returned")
 
         fields = ['name', 'line1', 'line2', 'line3', 'line4']
         name = ', '.join(result[key] for key in fields if result[key])

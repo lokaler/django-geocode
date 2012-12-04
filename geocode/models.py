@@ -106,4 +106,4 @@ def validate_attribute_keys(keys, name):
                                 u", ".join(sorted(AVAILABLE_ATTRIBUTE_KEYS))))
 
 def enough_available_attributes(values):
-    return bool('street' in values or 'address' in values)
+    return any(('city' in values, 'street' in values, 'address' in values))
