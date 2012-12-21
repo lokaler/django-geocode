@@ -46,23 +46,27 @@ class GeocodeSession(models.Model):
         self.total = len(objs)
         self.save()
 
-        for obj in objs:
-            values = defaults.copy()
-            for key, attr in attrs.items():
-                val = getattr(obj, attr)
-                if val:
-                    values[key] = val
-            if enough_available_attributes(values):
-                res = self.call_geocoders(values)
-                self.completed += 1
-                if res:
-                    self.succeeded += 1
-                    location, provider = res
-                    self.save()
-                    yield obj, location, provider
-                else:
-                    self.failed += 1
-                    self.save()
+        try:
+            for obj in objs:
+                values = defaults.copy()
+                for key, attr in attrs.items():
+                    val = getattr(obj, attr)
+                    if val:
+                        values[key] = val
+                if enough_available_attributes(values):
+                        res = self.call_geocoders(values)
+                        self.completed += 1
+                        if res:
+                            self.succeeded += 1
+                            location, provider = res
+                            self.save()
+                            yield obj, location, provider
+                        else:
+                            self.failed += 1
+                            self.save()
+                        self.log.append(e)
+        except Exception:
+            self.log = traceback.format_exc()
 
         self.finished = datetime.now()
         self.save()
