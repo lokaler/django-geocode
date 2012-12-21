@@ -169,7 +169,7 @@ class Yahoo(Geocoder):
         data = json.loads(response)
         results = data['ResultSet']
         status = results['Error']
-        if status != 0:
+        if status != "0":
             raise NoClearResult(status)
         found = int(results['Found'])
         if found == 0:
