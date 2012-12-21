@@ -64,7 +64,7 @@ class GeocodeSession(models.Model):
                         else:
                             self.failed += 1
                             self.save()
-                        self.log.append(e)
+
         except Exception:
             self.log = traceback.format_exc()
 
