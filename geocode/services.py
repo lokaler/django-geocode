@@ -8,7 +8,7 @@ from django.utils import simplejson as json
 from django.conf import settings
 
 ADMIN_NAME, ADMIN_EMAIL = settings.ADMINS[0]
-DEFAULT_CITY = settings.CITY
+DEFAULT_CITY = getattr(settings, 'CITY', None)
 
 keys = getattr(settings, 'GEOCODE_KEYS', {})
 
@@ -38,7 +38,7 @@ class Geocoder(object):
         self.query = ""
 
     def geocode(self, values, require_exact=True):
-        if 'city' not in values:
+        if 'city' not in values and DEFAULT_CITY:
             values['city'] = DEFAULT_CITY
         params = self.get_params(values)
         if self.rate_limit is not None:
